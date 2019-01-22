@@ -115,6 +115,4 @@ def compareGraphs(canvasName, folderName, graphs, minY, maxY, colors = [1,2,3,4]
         os.mkdir(folderName)
     canvas.SaveAs("%s/%s.png" % (folderName,canvasName))
 
-    canvas.SaveAs("%s.png" % canvasName)
-
     return canvas
