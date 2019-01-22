@@ -96,19 +96,7 @@ for iEv, event in enumerate(events) :
                mu1.charge() * mu2.charge() == -1 and \
                mass > 80. and mass < 120. :
                 
-                mu1Corr = rc.kScaleDT(mu1.charge(),mu1.pt(),mu1.eta(),mu1.phi())
-                mu2Corr = rc.kScaleDT(mu2.charge(),mu2.pt(),mu2.eta(),mu2.phi())
-
-                mu1TkCorr = ROOT.TLorentzVector()
-                mu1TkCorr.SetPtEtaPhiM(mu1.pt()*mu1Corr,mu1.eta(),mu1.phi(),0.106)
-
-                mu2TkCorr = ROOT.TLorentzVector()
-                mu2TkCorr.SetPtEtaPhiM(mu2.pt()*mu2Corr,mu2.eta(),mu2.phi(),0.106)
-
-                massCorr = (mu1TkCorr + mu2TkCorr).M()
-
                 histos["hMassPrompt"].Fill(mass)
-                histos["hMassCorr"].Fill(massCorr)
 
                 histos["hPtPrompt"].Fill(mu1.pt())
                 histos["hEtaPrompt"].Fill(mu1.eta())
@@ -129,17 +117,6 @@ for iEv, event in enumerate(events) :
                     if mu2.charge() < 0 and mu2.eta() > 2.0 :
                         histos["pMassVsPhiMinusPrompt"].Fill(mu2.phi(), mass)
 
-                if massCorr > 86. and massCorr < 96. :
-                    if mu1.charge() > 0 and mu1.eta() > 2.0 :
-                        histos["pMassVsPhiPlusCorr"].Fill(mu1.phi(), massCorr)
-                    if mu2.charge() > 0 and mu2.eta() > 2.0 :
-                        histos["pMassVsPhiPlusCorr"].Fill(mu2.phi(), massCorr)
-
-                    if mu1.charge() < 0 and mu1.eta() > 2.0 :
-                        histos["pMassVsPhiMinusCorr"].Fill(mu1.phi(), massCorr)
-                    if mu2.charge() < 0 and mu2.eta() > 2.0 :
-                        histos["pMassVsPhiMinusCorr"].Fill(mu2.phi(), massCorr)
-
 
 ############### HISTO PLOTTING ################################ 
 
@@ -149,9 +126,9 @@ histosPt   = [histos["hPtPrompt"]]
 histosEta  = [histos["hEtaPrompt"]]
 histosPhi  = [histos["hPhiPrompt"]]
 
-histosMass = [histos["hMassPrompt"], histos["hMassCorr"]]
+histosMass = [histos["hMassPrompt"]]
 histosMassVsPhi     = [histos["pMassVsPhiPlusPrompt"], histos["pMassVsPhiMinusPrompt"]]
-histosMassVsPhiCorr = [histos["pMassVsPhiPlusCorr"],   histos["pMassVsPhiMinusCorr"]]
+## histosMassVsPhiCorr = [histos["pMassVsPhiPlusCorr"],   histos["pMassVsPhiMinusCorr"]]
 
 canvasPt   = plotters.compareTH1Fs("histosPt",   PLOT_FOLDER, histosPt,   0.0, 0.1)
 canvasEta  = plotters.compareTH1Fs("histosEta",  PLOT_FOLDER, histosEta,  0.0, 0.1)
@@ -159,5 +136,5 @@ canvasPhi  = plotters.compareTH1Fs("histosPhi",  PLOT_FOLDER, histosPhi,  0.0, 0
 
 canvasMass          = plotters.compareTH1Fs("histosMass",          PLOT_FOLDER, histosMass,          0.0, 0.2)
 canvasMassVsPhi     = plotters.compareTH1Fs("histosMassVsPhi",     PLOT_FOLDER, histosMassVsPhi,     90.4, 91.4, False)
-canvasMassVsPhiCorr = plotters.compareTH1Fs("histosMassVsPhiCorr", PLOT_FOLDER, histosMassVsPhiCorr, 90.4, 91.4, False)
+## canvasMassVsPhiCorr = plotters.compareTH1Fs("histosMassVsPhiCorr", PLOT_FOLDER, histosMassVsPhiCorr, 90.4, 91.4, False)
 
