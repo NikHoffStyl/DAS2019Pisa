@@ -4,14 +4,22 @@ import python.PlotUtils as plotters
 import array
 import ROOT
 
-INPUT_FILE  = "/eos/cms/store/user/battilan/MuonPOG/ttbar.root"
+############### CONFIG VARIABLES ###############################
+
+INPUT_FILE  = "/gpfs/ddn/cms/user/cmsdas/2019/muon/data/ttbar.root"
 PLOT_FOLDER = "id_analysis/"
 MAX_EVENTS = 999999999
 #MAX_EVENTS = 20000
 MIN_PT = 15.0
 
+
+############### MAIN PROGRAM ################################## 
+
 events = fwlite.Events(INPUT_FILE)
 muons  = fwlite.Handle("std::vector<pat::Muon>") 
+
+
+############### HISTO BOOKING ################################# 
 
 histos = {}
 effs   = {}
@@ -48,9 +56,11 @@ for plotTag in plotTags :
         etaBins = array.array('d',[-2.4,-2.1,-1.6,-1.2,-0.9,-0.3,-0.2,0.2,0.3,0.9,1.2,1.6,2.1,2.4])
         effs["eEta%s%s" % (plotTag, effTag)] = ROOT.TEfficiency("eEta%s%s" % (plotTag, effTag),
                                                                 "eEta%s%s;muon #eta; efficiency" % (plotTag, effTag), 
-                                                                13, etaBins) #CB cambia con pT bin variabili
+                                                                13, etaBins)
 
         
+############### ANALYSIS LOOP ##################################
+
 for iEv, event in enumerate(events) :
 
     if iEv % 10000 == 0 :
@@ -132,6 +142,9 @@ for iEv, event in enumerate(events) :
 
                 effs["eEtaHeavyFMedium"].Fill(muIsMedium, muEta)
                 effs["eEtaHeavyFTight"].Fill(muIsTight, muEta)
+
+
+############### HISTO PLOTTING ################################ 
 
 plotters.setPlotOptions()
 

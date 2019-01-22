@@ -5,10 +5,10 @@ import python.IsoUtils as isoUtils
 import array
 import ROOT
 
-############### CONTROL VARIABLES ##############################
+############### CONFIG VARIABLES ###############################
 
-SIG_INPUT_FILE = "/eos/cms/store/user/battilan/MuonPOG/DY.root"
-BKG_INPUT_FILE = "/eos/cms/store/user/battilan/MuonPOG/QCDMuEnriched.root"
+SIG_INPUT_FILE = "/gpfs/ddn/cms/user/cmsdas/2019/muon/data/DY.root"
+BKG_INPUT_FILE = "/gpfs/ddn/cms/user/cmsdas/2019/muon/data/QCDMuEnriched.root"
 PLOT_FOLDER = "iso_analysis/"
 MAX_EVENTS = 999999999
 #MAX_EVENTS = 20000
@@ -75,6 +75,9 @@ def analysisLoop(inputFile, sampleLabel, histos, effs, rocs) :
                 
                 
 ############### MAIN PROGRAM ################################## 
+                
+
+############### HISTO BOOKING ################################# 
 
 histos = {}
 effs   = {}
@@ -116,6 +119,9 @@ rocs["pfRelIso"]  = isoUtils.Roc2DVec([0.01, 0.02, 0.04, 0.06, 0.08, 0.10, 0.20,
 
 analysisLoop(SIG_INPUT_FILE,"DY",  histos, effs, rocs)
 analysisLoop(BKG_INPUT_FILE,"QCD", histos, effs, rocs)
+
+
+############### HISTO PLOTTING ################################ 
 
 plotters.setPlotOptions()
 

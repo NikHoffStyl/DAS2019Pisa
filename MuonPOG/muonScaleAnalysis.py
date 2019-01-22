@@ -5,11 +5,16 @@ import python.RoccoR as roccor
 import array
 import ROOT
 
-INPUT_FILE = "/eos/cms/store/user/battilan/MuonPOG/ZMu.root"
+############### CONFIG VARIABLES ###############################
+
+INPUT_FILE = "/gpfs/ddn/cms/user/cmsdas/2019/muon/data/ZMu.root"
 PLOT_FOLDER = "scale_analysis/"
 MAX_EVENTS = 999999999
 #MAX_EVENTS = 50000
 MIN_PT = 20.0
+
+
+############### MAIN PROGRAM ################################## 
 
 rc = roccor.RoccoR("data/RoccoR2017.txt")
 
@@ -17,6 +22,7 @@ events      = fwlite.Events(INPUT_FILE)
 muonsHandle = fwlite.Handle("std::vector<pat::Muon>") 
 
 
+############### HISTO BOOKING ################################# 
 
 histos = {}
 effs   = {}
@@ -25,21 +31,23 @@ plotTags = ["Prompt", "Corr"]
 
 for plotTag in plotTags :
 
+    if plotTag == "Prompt" :
+
+            histos["hPt%s" % plotTag] = ROOT.TH1F("hPt%s" % plotTag,
+                                                  "hPt%s;muon p_{T}; entries" % plotTag, 
+                                                  100, 0., 100)
+
+            histos["hEta%s" % plotTag] = ROOT.TH1F("hEta%s" % plotTag,
+                                                   "hEta%s;muon #eta; entries" % plotTag, 
+                                                   24, -2.4, +2.4)
+
+            histos["hPhi%s" % plotTag] = ROOT.TH1F("hPhi%s" % plotTag,
+                                                   "hPhi%s;muon #phi; entries" % plotTag, 
+                                                   24, -ROOT.TMath.Pi(), ROOT.TMath.Pi())
+
     histos["hMass%s" % plotTag] = ROOT.TH1F("hMass%s" % plotTag,
                                             "hMass%s; m_{(mu+,mu-)}; entries" % plotTag, 
                                             40, 80., 120)
-
-    histos["hPt%s" % plotTag] = ROOT.TH1F("hPt%s" % plotTag,
-                                          "hPt%s;muon p_{T}; entries" % plotTag, 
-                                          100, 0., 100)
-
-    histos["hEta%s" % plotTag] = ROOT.TH1F("hEta%s" % plotTag,
-                                           "hEta%s;muon #eta; entries" % plotTag, 
-                                           24, -2.4, +2.4)
-
-    histos["hPhi%s" % plotTag] = ROOT.TH1F("hPhi%s" % plotTag,
-                                           "hPhi%s;muon #phi; entries" % plotTag, 
-                                           24, -ROOT.TMath.Pi(), ROOT.TMath.Pi())
 
     histos["pMassVsPhiPlus%s" % plotTag] = ROOT.TProfile("pMassVsPhiPlus%s" % plotTag,
                                                          "pMassVsPhiPlus%s;muon #phi; m_{(mu+,mu-)}" % plotTag, 
@@ -49,6 +57,9 @@ for plotTag in plotTags :
                                                           "pMassVsPhiMinus%s;muon #phi; m_{(mu+,mu-)}" % plotTag, 
                                                           12, -ROOT.TMath.Pi(), ROOT.TMath.Pi())
         
+
+############### ANALYSIS LOOP ##################################
+
 for iEv, event in enumerate(events) :
 
     if iEv % 10000 == 0 :
@@ -128,6 +139,9 @@ for iEv, event in enumerate(events) :
                         histos["pMassVsPhiMinusCorr"].Fill(mu1.phi(), massCorr)
                     if mu2.charge() < 0 and mu2.eta() > 2.0 :
                         histos["pMassVsPhiMinusCorr"].Fill(mu2.phi(), massCorr)
+
+
+############### HISTO PLOTTING ################################ 
 
 plotters.setPlotOptions()
 

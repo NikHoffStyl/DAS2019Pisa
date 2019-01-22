@@ -2,7 +2,7 @@ import DataFormats.FWLite as fwlite
 
 N_EVENTS = 5
 
-events = fwlite.Events("/eos/cms/store/user/battilan/MuonPOG/DY.root")
+events = fwlite.Events("/gpfs/ddn/cms/user/cmsdas/2019/muon/data/DY.root")
 muons  = fwlite.Handle("std::vector<pat::Muon>") 
 
 for iEv, event in enumerate(events):
