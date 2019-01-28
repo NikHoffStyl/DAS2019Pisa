@@ -8,7 +8,8 @@ import ROOT
 
 INPUT_FILE  = "/gpfs/ddn/cms/user/cmsdas/2019/muon/data/ttbar.root"
 PLOT_FOLDER = "id_analysis/"
-MAX_EVENTS = 999999999
+#MAX_EVENTS = 999999999
+MAX_EVENTS = 100000
 #MAX_EVENTS = 20000
 MIN_PT = 15.0
 

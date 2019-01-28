@@ -10,7 +10,8 @@ import ROOT
 SIG_INPUT_FILE = "/gpfs/ddn/cms/user/cmsdas/2019/muon/data/DY.root"
 BKG_INPUT_FILE = "/gpfs/ddn/cms/user/cmsdas/2019/muon/data/QCDMuEnriched.root"
 PLOT_FOLDER = "iso_analysis/"
-MAX_EVENTS = 999999999
+#MAX_EVENTS = 999999999
+MAX_EVENTS = 50000
 #MAX_EVENTS = 20000
 MIN_PT = 20.0
 

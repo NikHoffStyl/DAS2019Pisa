@@ -9,7 +9,8 @@ import ROOT
 
 INPUT_FILE = "/gpfs/ddn/cms/user/cmsdas/2019/muon/data/ZMu.root"
 PLOT_FOLDER = "scale_analysis/"
-MAX_EVENTS = 999999999
+#MAX_EVENTS = 999999999
+MAX_EVENTS = 75000
 #MAX_EVENTS = 50000
 MIN_PT = 20.0
 
